@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rehmat Developers | High-Performance Web & E-Commerce Solutions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            900: '#164e63',
+                        },
+                        dark: {
+                            bg: '#0a0f1d',
+                            card: '#111827',
+                            border: '#1f2937'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #080c16;
+            color: #f3f4f6;
+        }
+
+        /* Glassmorphism styling */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-nav {
+            background: rgba(8, 12, 22, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Custom glowing gradient effects */
+        .glow-effect {
+            position: relative;
+        }
+        .glow-effect::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #06b6d4, #3b82f6, #06b6d4);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            filter: blur(8px);
+        }
+        .glow-effect:hover::before {
+            opacity: 0.7;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080c16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- Ambient Glow Background Graphics -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full filter blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full filter blur-[140px] pointer-events-none z-0"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-blue-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                    RD
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-gray-200 to-brand-400 bg-clip-text text-transparent">
+                        Rehmat Developers
+                    </span>
+                    <span class="block text-[10px] text-gray-400 uppercase tracking-widest font-medium">By M. Waleed</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-brand-400 transition-colors">About</a>
+                <a href="#services" class="hover:text-brand-400 transition-colors">Services</a>
+                <a href="#projects" class="hover:text-brand-400 transition-colors">Projects</a>
+                <a href="#process" class="hover:text-brand-400 transition-colors">Our Process</a>
+                <a href="#contact" class="hover:text-brand-400 transition-colors">Contact</a>
+            </nav>
+
+            <!-- CTA Actions -->
+            <div class="hidden sm:flex items-center gap-4">
+                <a href="https://wa.me/923284461097?text=Hi%20Waleed,%20I%20visited%20Rehmat%20Developers%20and%20want%20to%20discuss%20a%20website%20project." 
+                   target="_blank" 
+                   class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-blue-600 hover:from-brand-600 hover:to-blue-700 text-white font-semibold text-sm shadow-md shadow-brand-500/20 hover:shadow-brand-500/40 transition-all flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Hire Us
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white p-2 text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-800 bg-dark-card/95 backdrop-blur-xl px-6 py-6 space-y-4">
+            <a href="#about" class="block text-gray-300 hover:text-brand-400 font-medium mobile-link">About</a>
+            <a href="#services" class="block text-gray-300 hover:text-brand-400 font-medium mobile-link">Services</a>
+            <a href="#projects" class="block text-gray-300 hover:text-brand-400 font-medium mobile-link">Projects</a>
+            <a href="#process" class="block text-gray-300 hover:text-brand-400 font-medium mobile-link">Our Process</a>
+            <a href="#contact" class="block text-gray-300 hover:text-brand-400 font-medium mobile-link">Contact</a>
+            <div class="pt-4 border-t border-gray-800 flex flex-col gap-3">
+                <a href="https://wa.me/923284461097?text=Hi%20Waleed,%20I%20visited%20Rehmat%20Developers%20and%20want%20to%20discuss%20a%20website%20project." 
+                   target="_blank" 
+                   class="w-full text-center py-3 rounded-xl bg-brand-500 text-white font-semibold flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex-grow">
+
+        <!-- HERO SECTION -->
+        <section id="about" class="pt-16 pb-20 md:pt-24 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    
+                    <!-- Availability Badge -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border-brand-500/30 text-brand-400 text-xs font-semibold tracking-wide">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Available for New Projects & Freelance Contracts
+                    </div>
+
+                    <!-- Main Headline -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        We Build High-Speed <span class="bg-gradient-to-r from-brand-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">Websites & Stores</span> That Convert.
+                    </h1>
+
+                    <!-- Paragraph Description -->
+                    <p class="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Welcome to <strong class="text-white font-semibold">Rehmat Developers</strong>, founded by <strong class="text-white font-semibold">Muhammad Waleed</strong>. We specialize in custom frontend development, pixel-perfect UI/UX design, and ultra-fast E-commerce stores that boost sales and scale businesses online.
+                    </p>
+
+                    <!-- Tech Tags Pill List -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2">
+                        <span class="px-3 py-1 rounded-lg bg-gray-800/80 border border-gray-700/60 text-xs text-gray-300 font-medium">HTML5 & CSS3</span>
+                        <span class="px-3 py-1 rounded-lg bg-gray-800/80 border border-gray-700/60 text-xs text-gray-300 font-medium">JavaScript (ES6+)</span>
+                        <span class="px-3 py-1 rounded-lg bg-gray-800/80 border border-gray-700/60 text-xs text-gray-300 font-medium">Tailwind CSS</span>
+                        <span class="px-3 py-1 rounded-lg bg-gray-800/80 border border-gray-700/60 text-xs text-gray-300 font-medium">React.js</span>
+                        <span class="px-3 py-1 rounded-lg bg-gray-800/80 border border-gray-700/60 text-xs text-gray-300 font-medium">E-commerce Stores</span>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="https://wa.me/923284461097?text=Hi%20Waleed,%20I%20need%20a%20website%20quote." 
+                           target="_blank" 
+                           class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-500 to-blue-600 hover:from-brand-600 hover:to-blue-700 text-white font-bold shadow-lg shadow-brand-500/25 transition-all text-center flex items-center justify-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-xl"></i> Instant WhatsApp Quote
+                        </a>
+                        <a href="#projects" 
+                           class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card hover:bg-gray-800/80 text-gray-200 font-semibold border border-gray-700 transition-all text-center flex items-center justify-center gap-2">
+                            Explore Portfolio <i class="fa-solid fa-arrow-down text-sm text-brand-400"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Card Graphic/Developer Intro -->
+                <div class="lg:col-span-5 relative">
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 relative z-10 border border-gray-800 shadow-2xl">
+                        
+                        <!-- Header with Status -->
+                        <div class="flex items-center justify-between border-b border-gray-800 pb-6 mb-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-500 to-indigo-600 p-0.5">
+                                    <div class="w-full h-full rounded-full bg-dark-bg flex items-center justify-center text-brand-400 font-bold text-xl">
+                                        MW
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">Muhammad Waleed</h3>
+                                    <p class="text-xs text-brand-400 font-medium">Lead Developer & Founder</p>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+                                Online
+                            </span>
+                        </div>
+
+                        <!-- Highlights List -->
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-dark-bg/60 border border-gray-800/80">
+                                <i class="fa-solid fa-bolt text-brand-400 mt-1"></i>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-200">Ultra Fast Loading</p>
+                                    <p class="text-xs text-gray-400">Speed optimization under 2s response time.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-dark-bg/60 border border-gray-800/80">
+                                <i class="fa-solid fa-mobile-screen text-brand-400 mt-1"></i>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-200">100% Mobile Responsive</p>
+                                    <p class="text-xs text-gray-400">Flawless experience across phones, tablets & PC.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-dark-bg/60 border border-gray-800/80">
+                                <i class="fa-solid fa-location-dot text-brand-400 mt-1"></i>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-200">Location</p>
+                                    <p class="text-xs text-gray-400">Raja Jang, Kasur, Punjab, Pakistan</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Strip -->
+                        <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-800 text-center">
+                            <div>
+                                <span class="text-2xl font-black text-white block">100%</span>
+                                <span class="text-[11px] text-gray-400 uppercase tracking-wider font-medium">Client Satisfaction</span>
+                            </div>
+                            <div>
+                                <span class="text-2xl font-black text-brand-400 block">24/7</span>
+                                <span class="text-[11px] text-gray-400 uppercase tracking-wider font-medium">Dedicated Support</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SERVICES OFFERED SECTION -->
+        <section id="services" class="py-20 bg-dark-card/40 border-y border-gray-800/60 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-xs uppercase font-extrabold tracking-widest text-brand-400">Our Expertise</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Services Engineered For Conversion</p>
+                    <p class="text-gray-400 text-sm sm:text-base">We don't just build websites; we craft digital sales channels tailored to grow your brand.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Service 1 -->
+                    <div class="glass-card p-8 rounded-2xl hover:border-brand-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Custom E-Commerce Stores</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            High-converting online stores built with seamless product catalogs, fast checkout experience, WhatsApp order buttons, and payment integration.
+                        </p>
+                        <span class="text-xs text-brand-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Boost Sales <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="glass-card p-8 rounded-2xl hover:border-brand-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Frontend Web Development</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Clean, modern, and SEO-optimized web development using raw HTML5, CSS3, JavaScript ES6+, Tailwind CSS, or React.js.
+                        </p>
+                        <span class="text-xs text-blue-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Clean Architecture <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="glass-card p-8 rounded-2xl hover:border-brand-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Figma / Design to HTML</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Converting your Figma, Adobe XD, or image designs into 100% pixel-perfect, fully responsive interactive websites.
+                        </p>
+                        <span class="text-xs text-indigo-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Pixel-Perfect Accuracy <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="glass-card p-8 rounded-2xl hover:border-brand-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Speed & Bug Fixes</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Fixing broken layouts, mobile display glitches, slow load times, and JavaScript console errors to maximize conversion rate.
+                        </p>
+                        <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Optimize Performance <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="glass-card p-8 rounded-2xl hover:border-brand-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Business Landing Pages</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            High-converting landing pages for real estate, clinics, law firms, local services, and digital products designed for direct client acquisition.
+                        </p>
+                        <span class="text-xs text-purple-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Drive Conversions <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="glass-card p-8 rounded-2xl hover:border-brand-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-handshake font-bold"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">White-Label Partner</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Are you a marketing agency needing a reliable frontend developer? We handle full website builds under your agency branding seamlessly.
+                        </p>
+                        <span class="text-xs text-amber-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Partner With Us <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SHOWCASE SECTION -->
+        <section id="projects" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <h2 class="text-xs uppercase font-extrabold tracking-widest text-brand-400 mb-2">Featured Work</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Selected Projects & Live Demos</p>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2" id="portfolioFilter">
+                    <button class="filter-btn active px-4 py-2 rounded-xl bg-brand-500 text-white text-xs font-semibold" data-filter="all">All</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl glass-card text-gray-300 hover:text-white text-xs font-semibold" data-filter="ecommerce">E-Commerce</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl glass-card text-gray-300 hover:text-white text-xs font-semibold" data-filter="business">Business</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl glass-card text-gray-300 hover:text-white text-xs font-semibold" data-filter="webapp">Web Apps</button>
+                </div>
+            </div>
+
+            <!-- Project Cards Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+                
+                <!-- Project Item 1 -->
+                <div class="project-card glass-card rounded-2xl overflow-hidden border border-gray-800 flex flex-col group" data-category="ecommerce">
+                    <div class="relative h-48 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-6 border-b border-gray-800 overflow-hidden">
+                        <div class="text-center group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-store text-5xl text-brand-400 mb-2"></i>
+                            <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest">E-Commerce Demo</span>
+                        </div>
+                        <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/30 text-[10px] font-bold">
+                            Live Demo Ready
+                        </span>
+                    </div>
+
+                    <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition-colors">Fashion & Retail E-Commerce Store</h3>
+                            <p class="text-gray-400 text-xs mt-2 leading-relaxed">
+                                Complete storefront featuring interactive product grid, quick cart modal, filter tags, and direct WhatsApp ordering system.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">HTML5</span>
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">Tailwind CSS</span>
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">JavaScript</span>
+                            </div>
+
+                            <button onclick="openProjectModal('Fashion E-Commerce Store', 'Custom storefront designed for apparel brands with quick search, cart manager, and WhatsApp order redirect.', 'https://github.com/rehmatdevelopers')" 
+                               class="w-full py-2.5 rounded-xl bg-dark-bg border border-gray-700 text-xs font-semibold text-gray-200 hover:text-white hover:border-brand-500 text-center block transition-all">
+                                View Demo Details <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 2 -->
+                <div class="project-card glass-card rounded-2xl overflow-hidden border border-gray-800 flex flex-col group" data-category="business">
+                    <div class="relative h-48 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-6 border-b border-gray-800 overflow-hidden">
+                        <div class="text-center group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-stethoscope text-5xl text-blue-400 mb-2"></i>
+                            <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest">Medical / Clinic</span>
+                        </div>
+                        <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold">
+                            Client Template
+                        </span>
+                    </div>
+
+                    <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition-colors">Healthcare & Clinic Landing Page</h3>
+                            <p class="text-gray-400 text-xs mt-2 leading-relaxed">
+                                Fast-loading dental clinic website with doctor schedule booking form, service overview, and patient reviews.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">HTML/CSS</span>
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">JS Animations</span>
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">Responsive</span>
+                            </div>
+
+                            <button onclick="openProjectModal('Clinic Booking Landing Page', 'High-speed landing page built to capture online patient appointments and highlight key medical services.', 'https://github.com/rehmatdevelopers')" 
+                               class="w-full py-2.5 rounded-xl bg-dark-bg border border-gray-700 text-xs font-semibold text-gray-200 hover:text-white hover:border-brand-500 text-center block transition-all">
+                                View Demo Details <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 3 -->
+                <div class="project-card glass-card rounded-2xl overflow-hidden border border-gray-800 flex flex-col group" data-category="webapp">
+                    <div class="relative h-48 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-6 border-b border-gray-800 overflow-hidden">
+                        <div class="text-center group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-list-check text-5xl text-emerald-400 mb-2"></i>
+                            <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest">SaaS / Web App</span>
+                        </div>
+                        <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
+                            Interactive App
+                        </span>
+                    </div>
+
+                    <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition-colors">Client Acquisition Tracker App</h3>
+                            <p class="text-gray-400 text-xs mt-2 leading-relaxed">
+                                Custom task management dashboard built for tracking daily client outreach progress, leads status, and conversion metrics.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">JavaScript ES6</span>
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">LocalStorage</span>
+                                <span class="px-2 py-0.5 rounded bg-gray-800 text-[10px] text-gray-300">Tailwind</span>
+                            </div>
+
+                            <button onclick="openProjectModal('Client Outreach Tracker App', 'Single-page web application to organize lead pipelines, mark daily outreach tasks, and manage cold messaging targets.', 'https://github.com/rehmatdevelopers')" 
+                               class="w-full py-2.5 rounded-xl bg-dark-bg border border-gray-700 text-xs font-semibold text-gray-200 hover:text-white hover:border-brand-500 text-center block transition-all">
+                                View Demo Details <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- OUR PROCESS SECTION -->
+        <section id="process" class="py-20 bg-dark-card/40 border-y border-gray-800/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-xs uppercase font-extrabold tracking-widest text-brand-400">Step-By-Step System</h2>
+                    <p class="text-3xl font-extrabold text-white">How We Work With You</p>
+                    <p class="text-gray-400 text-sm">A transparent workflow ensuring fast delivery and zero confusion.</p>
+                </div>
+
+                <div class="grid md:grid-cols-4 gap-8 relative">
+                    
+                    <!-- Step 1 -->
+                    <div class="glass-card p-6 rounded-2xl relative">
+                        <span class="w-8 h-8 rounded-full bg-brand-500 text-white font-black text-sm flex items-center justify-center mb-4">1</span>
+                        <h4 class="text-base font-bold text-white mb-2">Requirement & Audit</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">We review your brand goals, target audience, and current website bottlenecks.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="glass-card p-6 rounded-2xl relative">
+                        <span class="w-8 h-8 rounded-full bg-blue-600 text-white font-black text-sm flex items-center justify-center mb-4">2</span>
+                        <h4 class="text-base font-bold text-white mb-2">Modern UI Design</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">We plan a high-converting layout with clean typography, colors, and graphics.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="glass-card p-6 rounded-2xl relative">
+                        <span class="w-8 h-8 rounded-full bg-indigo-600 text-white font-black text-sm flex items-center justify-center mb-4">3</span>
+                        <h4 class="text-base font-bold text-white mb-2">Clean Coding</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">Writing fully responsive, fast, and optimized HTML/CSS/JS code.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="glass-card p-6 rounded-2xl relative">
+                        <span class="w-8 h-8 rounded-full bg-emerald-500 text-white font-black text-sm flex items-center justify-center mb-4">4</span>
+                        <h4 class="text-base font-bold text-white mb-2">Testing & Launch</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">Speed optimization, mobile testing, and deploying live on host servers.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT & DIRECT AUDIT REQUEST FORM SECTION -->
+        <section id="contact" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12">
+                
+                <!-- Contact Info Left -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <h2 class="text-xs uppercase font-extrabold tracking-widest text-brand-400 mb-2">Get In Touch</h2>
+                        <p class="text-3xl font-extrabold text-white">Let’s Discuss Your Next Project</p>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Have a website design in mind or need an existing store overhauled? Contact Muhammad Waleed directly.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        
+                        <!-- Phone / WhatsApp -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium">WhatsApp / Cell</p>
+                                <a href="https://wa.me/923284461097" target="_blank" class="text-base font-bold text-white hover:text-brand-400">
+                                    +92 (328) 4461097
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Email Placeholder -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 text-xl">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium">Official Email</p>
+                                <a href="mailto:contact@rehmatdevelopers.com" class="text-base font-bold text-white hover:text-brand-400">
+                                    contact@rehmatdevelopers.com
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium">Headquarters</p>
+                                <p class="text-base font-bold text-white">Raja Jang, Kasur, Punjab, Pakistan</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Social Media Links -->
+                    <div class="pt-6 border-t border-gray-800">
+                        <p class="text-xs text-gray-400 font-medium mb-4">Connect With Rehmat Developers:</p>
+                        <div class="flex items-center gap-3" id="socialLinksContainer">
+                            <a href="https://linkedin.com" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-brand-400 hover:border-brand-500/50 transition-all">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-brand-400 hover:border-brand-500/50 transition-all">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                            <a href="https://facebook.com" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-brand-400 hover:border-brand-500/50 transition-all">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-brand-400 hover:border-brand-500/50 transition-all">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://tiktok.com" target="_blank" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-brand-400 hover:border-brand-500/50 transition-all">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Instant Message Form -->
+                <div class="lg:col-span-7">
+                    <div class="glass-card rounded-2xl p-8 border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">Send an Inquiry or Free Audit Request</h3>
+                        <p class="text-xs text-gray-400 mb-6">Fill in details below to launch a direct pre-filled WhatsApp message to Muhammad Waleed.</p>
+
+                        <form id="contactForm" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 mb-1.5">Your Name *</label>
+                                    <input type="text" id="senderName" required placeholder="John Doe" 
+                                           class="w-full px-4 py-3 rounded-xl bg-dark-bg border border-gray-800 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 mb-1.5">Business / Brand Name</label>
+                                    <input type="text" id="businessName" placeholder="My Apparel Store" 
+                                           class="w-full px-4 py-3 rounded-xl bg-dark-bg border border-gray-800 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1.5">Service Required</label>
+                                <select id="serviceType" class="w-full px-4 py-3 rounded-xl bg-dark-bg border border-gray-800 text-sm text-gray-300 focus:outline-none focus:border-brand-500 transition-colors">
+                                    <option value="New E-Commerce Store">New E-Commerce Store</option>
+                                    <option value="Custom Frontend Website">Custom Frontend Website (HTML/CSS/JS)</option>
+                                    <option value="Speed & Bug Fixes">Website Speed & Bug Fixes</option>
+                                    <option value="Figma to Code Conversion">Figma / Design to Code</option>
+                                    <option value="White-Label Partnership">White-Label Agency Partnership</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1.5">Project Details / Message *</label>
+                                <textarea id="projectMessage" rows="4" required placeholder="Describe your website needs or send your current store URL..." 
+                                          class="w-full px-4 py-3 rounded-xl bg-dark-bg border border-gray-800 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-500 to-blue-600 hover:from-brand-600 hover:to-blue-700 text-white font-bold text-sm shadow-lg shadow-brand-500/25 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-lg"></i> Send via WhatsApp Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="border-t border-gray-800/80 bg-dark-bg/90 relative z-10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-white font-bold text-sm">
+                    RD
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-white">Rehmat Developers</p>
+                    <p class="text-[11px] text-gray-400">© 2026 Rehmat Developers. All Rights Reserved.</p>
+                </div>
+            </div>
+
+            <p class="text-xs text-gray-500 text-center">
+                Founded & Managed by <span class="text-gray-300 font-semibold">Muhammad Waleed</span> — Kasur, Pakistan
+            </p>
+
+            <div class="flex items-center gap-4 text-xs text-gray-400">
+                <a href="#about" class="hover:text-brand-400">Back to Top <i class="fa-solid fa-arrow-up text-[10px] ml-1"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PROJECT MODAL POPUP -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-card max-w-lg w-full rounded-2xl p-6 border border-gray-700 relative space-y-4">
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 id="modalTitle" class="text-xl font-bold text-white">Project Title</h3>
+            <p id="modalDescription" class="text-xs text-gray-300 leading-relaxed">Project description goes here...</p>
+            <div class="pt-4 border-t border-gray-800 flex gap-3">
+                <a id="modalGithubBtn" href="#" target="_blank" class="flex-1 py-2.5 rounded-xl bg-brand-500 text-white text-xs font-semibold text-center">
+                    Visit GitHub Repo
+                </a>
+                <button onclick="closeProjectModal()" class="px-4 py-2.5 rounded-xl bg-gray-800 text-gray-300 text-xs font-semibold">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FOR INTERACTIVITY -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Portfolio Filtering Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-brand-500', 'text-white');
+                    b.classList.add('glass-card', 'text-gray-300');
+                });
+                btn.classList.add('active', 'bg-brand-500', 'text-white');
+                btn.classList.remove('glass-card', 'text-gray-300');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Contact Form WhatsApp Link Generator
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('senderName').value;
+            const business = document.getElementById('businessName').value || 'Not Specified';
+            const service = document.getElementById('serviceType').value;
+            const msg = document.getElementById('projectMessage').value;
+
+            const text = `Hi Waleed! I'm ${name} from ${business}.\nService Required: ${service}\nProject Details: ${msg}`;
+            const whatsappUrl = `https://wa.me/923284461097?text=${encodeURIComponent(text)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Modal Controls
+        function openProjectModal(title, desc, link) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDescription').innerText = desc;
+            document.getElementById('modalGithubBtn').href = link;
+            document.getElementById('projectModal').classList.remove('hidden');
+        }
+
+        function closeProjectModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
